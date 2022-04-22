@@ -75,6 +75,22 @@ describe("Check increment neighboors", () => {
         [1, 1, 1],
       ]);
     });
+    it("Field 3x3 as synthetic case with neighboors cells is reached max possible bomb", () => {
+      expect(
+        incrementNeighboors(
+          [1, 1],
+          [
+            [0, 1, bomb],
+            [8, bomb, 1],
+            [8, 8, 8],
+          ]
+        )
+      ).toStrictEqual([
+        [1, 2, bomb],
+        [8, bomb, 2],
+        [8, 8, 8],
+      ]);
+    });
   });
 
   describe("9x9 cases", () => {

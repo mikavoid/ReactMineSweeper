@@ -84,7 +84,7 @@ describe("FieldGenerator", () => {
       console.table(field);
 
       const flatField = field.flat();
-      expect(flatField.filter((x) => x === bomb)).toHaveLength(25);
+      expect(flatField.filter((x) => x === bomb)).toHaveLength(mines);
     });
   });
 });

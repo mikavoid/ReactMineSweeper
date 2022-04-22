@@ -8,7 +8,7 @@ interface CloseFrameProps {
   mouseDown?: boolean;
 }
 
-const ClosedFrame = styled.div<CloseFrameProps>`
+export const ClosedFrame = styled.div<CloseFrameProps>`
   display: flex;
   align-items: center;
   justify-content: center;
