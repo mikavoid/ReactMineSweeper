@@ -1,7 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./App";
-// import { Legend } from "./components/Legend/Legend";
+import { Top } from "./components/Top";
+import { ScoreBoard } from "./components/ScoreBoard";
 
-// ReactDOM.render(<Legend />, document.getElementById("target"));
+ReactDOM.render(
+  <>
+    <Top>Démineur</Top>
+    <ScoreBoard
+      time="000"
+      levels={["beginner", "intermediate", "expert"]}
+      mines="010"
+      onReset={() => console.log("RESET GAME")}
+    />
+  </>,
+  document.getElementById("target")
+);

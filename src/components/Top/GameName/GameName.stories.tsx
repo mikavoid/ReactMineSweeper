@@ -12,5 +12,5 @@ const Template: Story<GameNameProps> = (args) => <GameName {...args} />;
 
 export const MineSweeperGameName = Template.bind({});
 MineSweeperGameName.args = {
-  children: "minesweeper",
+  children: "Minesweeper",
 };

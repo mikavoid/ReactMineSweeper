@@ -35,9 +35,9 @@ const SecondAction = styled.span`
 `;
 
 export const Legend: FC<LegendProps> = ({
-  feature = "flag",
-  firstAction = "ctrl",
-  secondAction = "click",
+  feature = "Flag",
+  firstAction = "Ctrl",
+  secondAction = "Click",
 }: LegendProps) => {
   return (
     <Parent>

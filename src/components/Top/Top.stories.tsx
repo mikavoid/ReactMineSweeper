@@ -16,6 +16,6 @@ export const TopPanel = Template.bind({});
 TopPanel.args = {
   children: "The Démineur",
   feature: "Flag",
-  firstAction: "ctrl",
-  secondAction: "click",
+  firstAction: "Ctrl",
+  secondAction: "Click",
 };
