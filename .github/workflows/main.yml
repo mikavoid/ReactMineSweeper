@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,18 +25,27 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      # Install deps
+      - name: Dependencies install
+        run: yarn
+
       # Run project test
       - name: Tests
         run: yarn test
-        
+
       # Run Build
       - name: Build
         run: yarn build
-        
+
       # Run Stryker mutator check
       - name: Stryker
         run: yarn test:mutate
-    
+
       # Visual regression tests
-      - name: Chromatic
-        run: yarn chromatic
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        # Options required to the github chromatic action
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Chroatic token
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
