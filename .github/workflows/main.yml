@@ -41,11 +41,11 @@ jobs:
       - name: Stryker
         run: yarn test:mutate
 
-      # Visual regression tests
-      - name: Publish to Chromatic
-        uses: chromaui/action@v1
-        # Options required to the github chromatic action
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # Chroatic token
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+      # # Visual regression tests
+      # - name: Publish to Chromatic
+      #   uses: chromaui/action@v1
+      #   # Options required to the github chromatic action
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     # Chroatic token
+      #     projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
