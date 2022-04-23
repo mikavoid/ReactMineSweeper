@@ -8,7 +8,7 @@ module.exports = {
   reporters: ["html", "clear-text", "progress"],
   testRunner: "jest",
   coverageAnalysis: "perTest",
-  thresholds: { high: 90, low: 87, break: 85 },
+  thresholds: { high: 90, low: 50, break: 40 },
   mutate: [
     "src/**/*.ts?(x)",
     "!src/**/*@(.test|.spec|Spec|stories|styled).ts?(x)",

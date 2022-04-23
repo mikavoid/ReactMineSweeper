@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:mutate": "npx stryker run",
     "lint": "npx eslint ./ --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore --fix",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
@@ -18,7 +19,6 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "chromatic": "npx chromatic",
-    "stryker": "npx stryker run",
     "prepare": "husky install"
   },
   "devDependencies": {
