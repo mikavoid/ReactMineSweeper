@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, SyntheticEvent, useState } from "react";
 import styled from "@emotion/styled";
 import { Counter } from "./Counter";
 import { Level } from "./Level";
@@ -31,6 +31,10 @@ export interface ScoreBoardProps {
    * Number of bombs in the field
    */
   mines: string;
+  /**
+   * Called when a new level is selected
+   */
+  onLevelChange: (e: any) => void;
 }
 
 export const ScoreBoard: FC<ScoreBoardProps> = ({
@@ -38,11 +42,12 @@ export const ScoreBoard: FC<ScoreBoardProps> = ({
   mines = "010",
   levels = [],
   onReset,
+  onLevelChange,
 }) => {
   return (
     <Wrapper>
       <Counter>{time}</Counter>
-      <Level>{levels}</Level>
+      <Level onChange={onLevelChange}>{levels}</Level>
       <Reset onReset={onReset} />
       <Counter>{mines}</Counter>
     </Wrapper>

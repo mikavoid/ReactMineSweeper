@@ -1,9 +1,7 @@
-import { Cell, Coords, Field } from "./Field";
+import { Cell, Coords, Field, CellState } from "./Field";
 
 export const incrementNeighboors = (coords: Coords, field: Field): Field => {
   const items = getNeighboorsItems(coords);
-
-  console.log(Object.values(items));
 
   for (const item of Object.values(items)) {
     if (checkItemInField(item, field)) {

@@ -4,25 +4,24 @@ import {
   getNeighboorsItems,
   checkItemInField,
 } from "./CellsManipulator";
-
-const { empty, bomb } = CellState;
+const { empty: e, bomb: b, hidden: h } = CellState;
 
 describe("Check increment neighboors", () => {
   describe("Simple Cases", () => {
     it("Field with only one item", () => {
-      expect(incrementNeighboors([0, 0], [[bomb]])).toStrictEqual([[bomb]]);
+      expect(incrementNeighboors([0, 0], [[b]])).toStrictEqual([[b]]);
     });
     it("Field 2x2 with one mine", () => {
       expect(
         incrementNeighboors(
           [0, 0],
           [
-            [bomb, empty],
-            [empty, empty],
+            [b, e],
+            [e, e],
           ]
         )
       ).toStrictEqual([
-        [bomb, 1],
+        [b, 1],
         [1, 1],
       ]);
     });
@@ -31,13 +30,13 @@ describe("Check increment neighboors", () => {
         incrementNeighboors(
           [0, 0],
           [
-            [bomb, empty],
-            [empty, bomb],
+            [b, e],
+            [e, b],
           ]
         )
       ).toStrictEqual([
-        [bomb, 1],
-        [1, bomb],
+        [b, 1],
+        [1, b],
       ]);
     });
   });
@@ -48,14 +47,14 @@ describe("Check increment neighboors", () => {
         incrementNeighboors(
           [1, 1],
           [
-            [empty, empty, empty],
-            [empty, bomb, empty],
-            [empty, empty, empty],
+            [e, e, e],
+            [e, b, e],
+            [e, e, e],
           ]
         )
       ).toStrictEqual([
         [1, 1, 1],
-        [1, bomb, 1],
+        [1, b, 1],
         [1, 1, 1],
       ]);
     });
@@ -64,30 +63,30 @@ describe("Check increment neighboors", () => {
         incrementNeighboors(
           [1, 1],
           [
-            [empty, 1, bomb],
-            [empty, bomb, 1],
-            [empty, empty, empty],
+            [e, 1, b],
+            [e, b, 1],
+            [e, e, e],
           ]
         )
       ).toStrictEqual([
-        [1, 2, bomb],
-        [1, bomb, 2],
+        [1, 2, b],
+        [1, b, 2],
         [1, 1, 1],
       ]);
     });
-    it("Field 3x3 as synthetic case with neighboors cells is reached max possible bomb", () => {
+    it("Field 3x3 as synthetic case with neighboors cells is reached max possible b", () => {
       expect(
         incrementNeighboors(
           [1, 1],
           [
-            [0, 1, bomb],
-            [8, bomb, 1],
+            [0, 1, b],
+            [8, b, 1],
             [8, 8, 8],
           ]
         )
       ).toStrictEqual([
-        [1, 2, bomb],
-        [8, bomb, 2],
+        [1, 2, b],
+        [8, b, 2],
         [8, 8, 8],
       ]);
     });
@@ -142,7 +141,7 @@ describe("Check neighboors selectors", () => {
 
 describe("CheckItemInField", () => {
   describe("Simple cases", () => {
-    const field: Field = [[empty]];
+    const field: Field = [[e]];
     it("Out of y range", () => {
       expect(checkItemInField([1, 0], field)).toBe(false);
     });
@@ -156,11 +155,11 @@ describe("CheckItemInField", () => {
 
   describe("big field", () => {
     const field: Field = [
-      [empty, empty, empty, empty, empty],
-      [empty, empty, empty, empty, empty],
-      [empty, empty, empty, empty, empty],
-      [empty, empty, empty, empty, empty],
-      [empty, empty, empty, empty, empty],
+      [e, e, e, e, e],
+      [e, e, e, e, e],
+      [e, e, e, e, e],
+      [e, e, e, e, e],
+      [e, e, e, e, e],
     ];
 
     it("Out of x range", () => {

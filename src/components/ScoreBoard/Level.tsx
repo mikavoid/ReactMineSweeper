@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, SyntheticEvent } from "react";
 import styled from "@emotion/styled";
 
 const Select = styled.select`
@@ -23,13 +23,20 @@ export interface LevelProps {
    * All levels options
    */
   children: string[];
+
+  /**
+   * Select onChange handler
+   */
+  onChange: (e: any) => void;
 }
 
-export const Level: FC<LevelProps> = ({ children }) => {
+export const Level: FC<LevelProps> = ({ children, onChange }) => {
   return (
-    <Select>
+    <Select onChange={onChange}>
       {children.map((c, i) => (
-        <Option key={i}>{c}</Option>
+        <Option key={i} value={c}>
+          {c}
+        </Option>
       ))}
     </Select>
   );
