@@ -53,6 +53,7 @@ export const useGame = (): ReturnType => {
   };
 
   const createNewPlayerField = (level: LevelNames) => {
+    setGameState(GameState.ONGOING);
     const [size] = GameSettings[level];
     const newPlayerField = emptyFieldGenerator(size, CellState.hidden);
     setPlayerField([...newPlayerField]);
