@@ -22,6 +22,7 @@ interface ReturnType {
   gameState: GameState;
   settings: [number, number];
   playerField: Field;
+  timer: number;
   handleClick: (coords: Coords) => void;
   handleContextMenu: (coords: Coords) => void;
   handleChangeLevel: (e: any) => void;
@@ -33,6 +34,8 @@ export const useGame = (): ReturnType => {
   const [size, bombs] = GameSettings[level];
   const [reset, setReset] = useState(0);
   const [gameState, setGameState] = useState(GameState.ONGOING);
+  const [timer, setTimer] = useState(0);
+  const [gameIsStarted, setGameIsStarted] = useState(false);
 
   let initialPlayerField: Field = emptyFieldGenerator(size, CellState.hidden);
   const [playerField, setPlayerField] = useState<Field>(initialPlayerField);
@@ -41,11 +44,29 @@ export const useGame = (): ReturnType => {
     [size, bombs, reset]
   );
 
+  useEffect(() => {
+    let it: any = null;
+    if (gameIsStarted) {
+      it = setInterval(() => {
+        setTimer(timer + 1);
+      }, 1000);
+
+      if (gameState === GameState.LOST || gameState === GameState.WON)
+        clearInterval(it);
+    }
+
+    return () => {
+      clearInterval(it);
+    };
+  }, [gameIsStarted, gameState, timer]);
+
   const handleClick = (coords: Coords) => {
+    if (!gameIsStarted) setGameIsStarted(true);
     if (gameState !== GameState.ONGOING) return;
     try {
       const newPlayerField = openCell(coords, playerField, gameField);
       setPlayerField([...newPlayerField]);
+      setGameIsStarted(true);
     } catch (e) {
       setPlayerField([...gameField]);
       setGameState(GameState.LOST);
@@ -53,7 +74,6 @@ export const useGame = (): ReturnType => {
   };
 
   const createNewPlayerField = (level: LevelNames) => {
-    setGameState(GameState.ONGOING);
     const [size] = GameSettings[level];
     const newPlayerField = emptyFieldGenerator(size, CellState.hidden);
     setPlayerField([...newPlayerField]);
@@ -71,8 +91,8 @@ export const useGame = (): ReturnType => {
   };
 
   const handleContextMenu = (coords: Coords) => {
+    if (!gameIsStarted) setGameIsStarted(true);
     if (gameState !== GameState.ONGOING) return;
-
     const newPlayerField = setFlag(coords, playerField, gameField);
     setPlayerField([...newPlayerField]);
   };
@@ -82,6 +102,7 @@ export const useGame = (): ReturnType => {
     if (isSolved) {
       setPlayerField([...gameField]);
       setGameState(GameState.WON);
+      setGameIsStarted(false);
     }
   }, [playerField]);
 
@@ -90,6 +111,7 @@ export const useGame = (): ReturnType => {
     gameState,
     settings: GameSettings[level],
     playerField,
+    timer,
     handleClick,
     handleChangeLevel,
     handleContextMenu,

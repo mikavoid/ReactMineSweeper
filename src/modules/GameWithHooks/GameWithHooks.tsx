@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 import { Top } from "@/components/Top";
 import { ScoreBoard } from "@/components/ScoreBoard";
@@ -24,6 +24,7 @@ export const GameWithHooks: FC = () => {
     handleReset,
     handleClick,
     settings,
+    timer,
   } = useGame();
 
   return (
@@ -31,7 +32,7 @@ export const GameWithHooks: FC = () => {
       <Top>Super Démineur</Top>
       <GameArea>
         <ScoreBoard
-          time="0"
+          time={String(timer)}
           mines={String(settings[1])}
           levels={GameLevels as unknown as string[]}
           onLevelChange={handleChangeLevel}
