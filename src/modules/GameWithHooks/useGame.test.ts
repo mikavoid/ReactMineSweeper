@@ -123,4 +123,86 @@ describe("useGame hook", () => {
       expect(result.current.gameState).toStrictEqual(GameState.LOST);
     });
   });
+
+  describe("Scoreboard behaviour - timer and bomb counters", () => {
+    it("Timer should start by click to a cell", () => {
+      jest.useFakeTimers();
+
+      const { result } = renderHook(useGame);
+
+      const timeMustPass = 5;
+
+      for (let i = 0; i < timeMustPass; i++) {
+        act(() => {
+          jest.advanceTimersByTime(1000);
+        });
+      }
+
+      expect(result.current.timer).toBe(0);
+      result.current.handleClick([0, 0]);
+
+      for (let i = 0; i < timeMustPass; i++) {
+        act(() => {
+          jest.advanceTimersByTime(1000);
+        });
+      }
+      expect(result.current.timer).toBe(5);
+    });
+
+    it("Timer should start by mark a cell by a flag", () => {
+      jest.useFakeTimers();
+
+      const { result } = renderHook(useGame);
+
+      const timeMustPass = 5;
+
+      for (let i = 0; i < timeMustPass; i++) {
+        act(() => {
+          jest.advanceTimersByTime(1000);
+        });
+      }
+
+      expect(result.current.timer).toBe(0);
+      result.current.handleContextMenu([0, 0]);
+
+      for (let i = 0; i < timeMustPass; i++) {
+        act(() => {
+          jest.advanceTimersByTime(1000);
+        });
+      }
+      expect(result.current.timer).toBe(5);
+    });
+    it("Time should reset value when onReset have been called", () => {
+      jest.useFakeTimers();
+
+      const { result } = renderHook(useGame);
+
+      const timeMustPass = 5;
+
+      for (let i = 0; i < timeMustPass; i++) {
+        act(() => {
+          jest.advanceTimersByTime(1000);
+        });
+      }
+
+      expect(result.current.timer).toBe(0);
+      result.current.handleClick([0, 0]);
+
+      for (let i = 0; i < timeMustPass; i++) {
+        act(() => {
+          jest.advanceTimersByTime(1000);
+        });
+      }
+      expect(result.current.timer).toBe(5);
+
+      result.current.handleReset();
+      expect(result.current.timer).toBe(0);
+      for (let i = 0; i < timeMustPass; i++) {
+        act(() => {
+          jest.advanceTimersByTime(1000);
+        });
+      }
+      expect(result.current.timer).toBe(0);
+    });
+  });
 });

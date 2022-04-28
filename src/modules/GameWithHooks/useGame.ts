@@ -36,6 +36,7 @@ export const useGame = (): ReturnType => {
   const [gameState, setGameState] = useState(GameState.ONGOING);
   const [timer, setTimer] = useState(0);
   const [gameIsStarted, setGameIsStarted] = useState(false);
+  const [flagCounter, setFlagCounter] = useState(0);
 
   let initialPlayerField: Field = emptyFieldGenerator(size, CellState.hidden);
   const [playerField, setPlayerField] = useState<Field>(initialPlayerField);
@@ -47,7 +48,7 @@ export const useGame = (): ReturnType => {
   useEffect(() => {
     let it: any = null;
     if (gameIsStarted) {
-      it = setInterval(() => {
+      it = setTimeout(() => {
         setTimer(timer + 1);
       }, 1000);
 
@@ -87,13 +88,22 @@ export const useGame = (): ReturnType => {
   const handleReset = () => {
     setReset(reset + 1);
     setGameState(GameState.ONGOING);
+    setGameIsStarted(false);
+    setTimer(0);
     createNewPlayerField(level);
   };
 
   const handleContextMenu = (coords: Coords) => {
     if (!gameIsStarted) setGameIsStarted(true);
     if (gameState !== GameState.ONGOING) return;
-    const newPlayerField = setFlag(coords, playerField, gameField);
+    const [newPlayerField, isSolved, flags] = setFlag(
+      coords,
+      playerField,
+      gameField,
+      flagCounter,
+      bombs
+    );
+    setFlagCounter(flags);
     setPlayerField([...newPlayerField]);
   };
 
